@@ -20,9 +20,13 @@ var detectNetwork = function(cardNumber) {
   let cardStart = function(){
     if(cardNumber[0] === '3' && (cardNumber[1] === '8' || cardNumber[1] === '9')) return 'dinersclub';
     if(cardNumber[0] === '3' && (cardNumber[1] ==='4' || cardNumber[1] ==='7')) return 'amex';
+    if(cardNumber[0] === '4') return 'visa';
+    if(cardNumber[0] === '5' && /[1-5]/.test(cardNumber[1])) return 'mastercard';
   }
 
   if(length === 14 && cardStart() === 'dinersclub') return 'Diner\'s Club';
   if(length === 15 && cardStart() === 'amex') return 'American Express';
+  if([13, 16, 19].indexOf(length) > -1 && cardStart() === 'visa') return 'Visa';
+  if(length === 16 && cardStart() === 'mastercard') return 'MasterCard';
 
 };
