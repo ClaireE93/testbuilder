@@ -140,14 +140,68 @@ describe('MasterCard', function() {
 describe('Discover', function() {
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
-  it('has a prefix of 6011 and a length of 16', function() {
-    
-  });
-  it('has a prefix of 6011 and a length of 19');
-});
+  var should = chai.should();
 
+  it('has a prefix of 6011 and a length of 16', function() {
+    detectNetwork('6011987654321098').should.equal('Discover');
+  });
+
+  it('has a prefix of 6011 and a length of 19', function() {
+    detectNetwork('6011987654321098765').should.equal('Discover');
+  });
+
+  it('has a prefix of 644-649 and a length of 16', function() {
+    detectNetwork('644-649012345678').should.equal('Discover');
+  });
+
+  it('has a prefix of 644-649 and a length of 19', function() {
+    detectNetwork('644-649012345678901').should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 16', function() {
+    detectNetwork('6512345678901234').should.equal('Discover');
+  });
+
+  it('has a prefix of 65 and a length of 19', function() {
+    detectNetwork('6512345678901234567').should.equal('Discover');
+  });
+});
+// Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
 describe('Maestro', function() {
-  // Write full test coverage for the Maestro card
+
+  var should = chai.should();
+
+  it('has a prefix of 5018 and a length of 12', function() {
+    detectNetwork('501812345678').should.equal('Maestro');
+  });
+
+  it('has a prefix of 5020 and a length of 12', function() {
+    detectNetwork('502012345678').should.equal('Maestro');
+  });
+
+  it('has a prefix of 5038 and a length of 12', function() {
+    detectNetwork('503812345678').should.equal('Maestro');
+  });
+
+  it('has a prefix of 6304 and a length of 12', function() {
+    detectNetwork('630412345678').should.equal('Maestro');
+  });
+
+  it('has a prefix of 5018 and a length of 13', function() {
+    detectNetwork('5018123456789').should.equal('Maestro');
+  });
+
+  it('has a prefix of 5020 and a length of 13', function() {
+    detectNetwork('5020123456789').should.equal('Maestro');
+  });
+
+  it('has a prefix of 5038 and a length of 13', function() {
+    detectNetwork('5038123456789').should.equal('Maestro');
+  });
+
+  it('has a prefix of 6304 and a length of 13', function() {
+    detectNetwork('6304123456789').should.equal('Maestro');
+  });
 });
 
 describe('should support China UnionPay')
