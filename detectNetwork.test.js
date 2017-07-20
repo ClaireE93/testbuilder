@@ -235,5 +235,28 @@ describe('should support China UnionPay', function() {
 // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
 
 describe('should support Switch', function() {
+  const should = chai.should();
 
+  let pref = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
+  let lenArr = [16, 18, 19];
+
+  let num, str, len;
+
+  function testCardNumber(i, str, len){
+    it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+      detectNetwork(str).should.equal('Switch');
+    });
+  }
+
+  for (let l = 0; l < lenArr.length; l++) {
+    len = lenArr[l];
+    for(let i = 0; i < pref.length; i++) {
+      num ='';
+      for(let j = 0; j < (len - pref[i].length); j++) {
+        num += '1';
+      }
+      str = pref[i] + num;
+      testCardNumber(i, str, len);
+    }
+  }
 })
