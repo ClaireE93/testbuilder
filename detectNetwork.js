@@ -65,8 +65,8 @@ var detectNetwork = function(cardNumber) {
   let isVisa = function () {
     //Make sure Switch check is run first to change takesPrecedent if necessary.
     isSwitch();
-    if(/^4/.test(cardNumber) && [13, 16, 19].indexOf(length) > -1 &&
-    !takesPrecedent) return true;
+    let isLen = [13, 16, 19].indexOf(length) > -1
+    if(/^4/.test(cardNumber) && isLen && !takesPrecedent) return true;
     return false;
   };
   objOfFuncs.Visa = isVisa;
@@ -96,9 +96,10 @@ var detectNetwork = function(cardNumber) {
   let isSwitch = function() {
     // let numArr = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
     let isNum = /^(4903|4905|4911|4936|564182|633110|6333|6759)/.test(cardNumber);
-    let isLen = length === 16 || length === 18 || length === 19;
+    let isLen = [16, 18, 19].indexOf(length) > -1
+    let isVisaConflict = (length !== 18) && /^4/.test(cardNumber);
     if(isNum && isLen) {
-      if (/^4/.test(cardNumber)) takesPrecedent = true;
+      if (isVisaConflict) takesPrecedent = true;
       return true;
     }
     return false;
