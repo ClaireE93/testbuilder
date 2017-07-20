@@ -145,6 +145,7 @@ describe('Discover', function() {
   let pref = ['6011', '644-649', '65'];
   let num;
   let str;
+  let func;
 
   for (let len = 16; len <= 19; len += 3) {
     for(let i = 0; i < pref.length; i++) {
@@ -153,13 +154,29 @@ describe('Discover', function() {
         num += '1';
       }
       str = pref[i] + num;
-      console.log(str);
-      it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+      func = function(str) {
+        console.log(str);
         detectNetwork(str).should.equal('Discover');
-      });
+      };
+      //NOT WORKING!! How to get function to run every loop? Issue with closure?
+    //   it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+    //     console.log(str);
+    //     detectNetwork(str).should.equal('Discover');
+    // })
+      it(`has a prefix of ${pref[i]} and a length of ${len}`, func(str));
+      //https://stackoverflow.com/questions/40101792/using-a-for-loop-in-a-mocha-test
+      //https://stackoverflow.com/questions/11370738/loop-mocha-tests
+      //https://stackoverflow.com/questions/21890010/how-to-repeat-loop-through-mocha-tests
     }
   }
 });
+
+// for (var prefix = 644; prefix <= 649; prefix++) {
+//   (function(prefix) {
+//     it('has a prefix of ' + prefix + ' and a length of 16');
+//     it('has a prefix of ' + prefix + ' and a length of 19');
+//   })(prefix)
+// }
 
 // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
 describe('Maestro', function() {
@@ -177,8 +194,11 @@ describe('Maestro', function() {
   for (let len = 12; len <= 19; len++) {
 
     for(let i = 0; i < pref.length; i++) {
+      str = '';
       str = pref[i] + num;
+      // console.log('out: ' + str);
       it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+        // console.log('in: ' + str);
         detectNetwork(str).should.equal('Maestro');
       });
     }
