@@ -137,19 +137,18 @@ describe('MasterCard', function() {
 
 });
 
+// Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
 describe('Discover', function() {
 
-  var should = chai.should();
+  const should = chai.should();
 
-  // Discover always has a prefix of 6011, 644-649, or 65, and a length of 16 or 19.
-  let pref = ['6011', '644-649', '65'];
-  let num;
-  let str;
-  let func;
+  let pref = ['6011', '644', '645', '646', '647', '648', '649', '65'];
+  let num, str;
+  // let str;
 
   function testCardNumber(i, str, len){
     it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
-      // console.log(str);
+      console.log(str);
       detectNetwork(str).should.equal('Discover');
     });
   }
@@ -169,7 +168,7 @@ describe('Discover', function() {
 // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
 describe('Maestro', function() {
 
-  var should = chai.should();
+  const should = chai.should();
 
   let pref = ['5018', '5020', '5038', '6304'];
   let num = '';
@@ -187,7 +186,6 @@ describe('Maestro', function() {
   }
 
   for (let len = 12; len <= 19; len++) {
-
     for(let i = 0; i < pref.length; i++) {
       str = '';
       str = pref[i] + num;

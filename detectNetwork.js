@@ -24,8 +24,8 @@ var detectNetwork = function(cardNumber) {
     if(cardNumber[0] === '3' && (cardNumber[1] === '8' || cardNumber[1] === '9')) return 'dinersclub';
     if(cardNumber[0] === '3' && (cardNumber[1] ==='4' || cardNumber[1] ==='7')) return 'amex';
     if(cardNumber[0] === '4') return 'visa';
-    if(cardNumber[0] === '5' && /[1-5]/.test(cardNumber[1])) return 'mastercard';
-    if(cardNumber.slice(0,4) === '6011' || cardNumber.slice(0,7) === '644-649' ||
+    if(/5[1-5]/.test(cardNumber.slice(0,2))) return 'mastercard';
+    if(cardNumber.slice(0,4) === '6011' || /64[4-9]/.test(cardNumber.slice(0,3)) ||
     cardNumber.slice(0,2) === '65') return 'discover';
     if(['5018', '5020', '5038', '6304'].indexOf(cardNumber.slice(0,4)) > -1) return 'maestro';
   }
