@@ -144,7 +144,6 @@ describe('Discover', function() {
 
   let pref = ['6011', '644', '645', '646', '647', '648', '649', '65'];
   let num, str;
-  // let str;
 
   function testCardNumber(i, str, len){
     it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
