@@ -78,15 +78,16 @@ var detectNetwork = function(cardNumber) {
   objOfFuncs.MasterCard = isMasterCard;
 
   let isDiscover = function() {
-    if(/^(64[4-9]|6011|65)/.test(cardNumber) &&
-    (length === 16 || length === 19)) return true;
+    let isLen = length === 16 || length === 19;
+    if(/^(64[4-9]|6011|65)/.test(cardNumber) && isLen) return true;
     return false;
   };
   objOfFuncs.Discover = isDiscover;
 
   let isMaestro = function() {
-    if(/^(5018|5020|5038|6304)/.test(cardNumber) && length > 11 &&
-    length < 20) return true;
+    let isLen = length > 11 && length < 20;
+    let isNum = /^(5018|5020|5038|6304)/.test(cardNumber);
+    if(isLen && isNum) return true;
     return false;
   };
   objOfFuncs.Maestro = isMaestro;
@@ -94,7 +95,6 @@ var detectNetwork = function(cardNumber) {
   // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
   // Check if card number has a 4 in front and takes precedent over Visa. If yes, takesPrecedent changes to true.
   let isSwitch = function() {
-    // let numArr = ['4903', '4905', '4911', '4936', '564182', '633110', '6333', '6759'];
     let isNum = /^(4903|4905|4911|4936|564182|633110|6333|6759)/.test(cardNumber);
     let isLen = [16, 18, 19].indexOf(length) > -1
     let isVisaConflict = (length !== 18) && /^4/.test(cardNumber);
@@ -111,7 +111,8 @@ var detectNetwork = function(cardNumber) {
     let num = parseInt(cardNumber.slice(0,6))
     let isInRange = num > 622125 && num < 622926;
     let isLen = length > 15 && len < 20;
-    if((/^(62[4-6]|628[2-8])/.test(cardNumber) || isInRange) && isLen) return true;
+    let isNum = /^(62[4-6]|628[2-8])/.test(cardNumber) || isInRange;
+    if(isNum && isLen) return true;
     return false;
   };
   objOfFuncs['China UnionPay'] = isChinaUnionPay;
