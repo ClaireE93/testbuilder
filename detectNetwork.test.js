@@ -147,28 +147,63 @@ describe('Discover', function() {
   let str;
   let func;
 
+  function testCardNumber(i, str, len){
+    it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+      console.log(str);
+      detectNetwork(str).should.equal('Discover');
+    });
+  }
+
   for (let len = 16; len <= 19; len += 3) {
     for(let i = 0; i < pref.length; i++) {
-      num = '';
+      num ='';
       for(let j = 0; j < (len - pref[i].length); j++) {
         num += '1';
       }
       str = pref[i] + num;
-      func = function(str) {
-        console.log(str);
-        detectNetwork(str).should.equal('Discover');
-      };
-      //NOT WORKING!! How to get function to run every loop? Issue with closure?
-    //   it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
-    //     console.log(str);
-    //     detectNetwork(str).should.equal('Discover');
-    // })
-      it(`has a prefix of ${pref[i]} and a length of ${len}`, func(str));
-      //https://stackoverflow.com/questions/40101792/using-a-for-loop-in-a-mocha-test
-      //https://stackoverflow.com/questions/11370738/loop-mocha-tests
-      //https://stackoverflow.com/questions/21890010/how-to-repeat-loop-through-mocha-tests
+      testCardNumber(i, str, len);
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+  // for (let len = 16; len <= 19; len += 3) {
+  //   for(let i = 0; i < pref.length; i++) {
+  //     num = '';
+  //     for(let j = 0; j < (len - pref[i].length); j++) {
+  //       num += '1';
+  //     }
+  //     str = pref[i] + num;
+  //     func = function(str) {
+  //       console.log(str);
+  //       detectNetwork(str).should.equal('Discover');
+  //     };
+  //     //NOT WORKING!! How to get function to run every loop? Issue with creating closure.
+  //   //   it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+  //   //     console.log(str);
+  //   //     detectNetwork(str).should.equal('Discover');
+  //   // })
+  //     // it(`has a prefix of ${pref[i]} and a length of ${len}`, func(str));
+  //     //https://stackoverflow.com/questions/40101792/using-a-for-loop-in-a-mocha-test
+  //     //https://stackoverflow.com/questions/11370738/loop-mocha-tests
+  //     //https://stackoverflow.com/questions/21890010/how-to-repeat-loop-through-mocha-tests
+  //     //Closure is only seeing last variable:
+  //     // (function(field) {
+  //
+  //       // it(..., function(done) { ... });
+  //
+  //     // })(writeableFields[_i]);
+  //   }
+  // }
 });
 
 // for (var prefix = 644; prefix <= 649; prefix++) {
