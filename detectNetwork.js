@@ -110,7 +110,7 @@ var detectNetwork = function(cardNumber) {
   let isChinaUnionPay = function() {
     let num = parseInt(cardNumber.slice(0,6))
     let isInRange = num > 622125 && num < 622926;
-    let isLen = length > 15 && len < 20;
+    let isLen = length > 15 && length < 20;
     let isNum = /^(62[4-6]|628[2-8])/.test(cardNumber) || isInRange;
     if(isNum && isLen) return true;
     return false;

@@ -148,7 +148,6 @@ describe('Discover', function() {
 
   function testCardNumber(i, str, len){
     it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
-      console.log(str);
       detectNetwork(str).should.equal('Discover');
     });
   }
@@ -180,7 +179,6 @@ describe('Maestro', function() {
 
   function testCardNumber(i, str, len){
     it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
-      console.log(str);
       detectNetwork(str).should.equal('Maestro');
     });
   }
@@ -196,5 +194,46 @@ describe('Maestro', function() {
 
 });
 
-describe('should support China UnionPay')
-describe('should support Switch')
+// China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+describe('should support China UnionPay', function() {
+  const should = chai.should();
+
+  let pref = [];
+
+  for(let i = 622126; i < 622926; i++) {
+    pref.push(i.toString());
+  }
+
+  for(let i = 624; i < 627; i++) {
+    pref.push(i.toString());
+  }
+
+  for(let i = 6282; i < 6289; i++) {
+    pref.push(i.toString());
+  }
+
+  let num, str;
+
+  function testCardNumber(i, str, len){
+    it(`has a prefix of ${pref[i]} and a length of ${len}`, function() {
+      detectNetwork(str).should.equal('China UnionPay');
+    });
+  }
+
+  for (let len = 16; len <= 19; len ++) {
+    for(let i = 0; i < pref.length; i++) {
+      num ='';
+      for(let j = 0; j < (len - pref[i].length); j++) {
+        num += '1';
+      }
+      str = pref[i] + num;
+      testCardNumber(i, str, len);
+    }
+  }
+});
+
+// Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+
+describe('should support Switch', function() {
+
+})
